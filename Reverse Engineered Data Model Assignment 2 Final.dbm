@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="Assignment2Final" encoding="UTF8" lc-collate="English_United States.1252" lc-ctype="English_United States.1252" is-template="false" allow-conns="true">
+	<role name="postgres"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Customer_Details">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="60" y="60"/>
+	<column name="Cust_ID" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Cust_FirstName">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="Cust_LastName">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="Cust_MobileNo">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="Cust_EmailAddress">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="Cust_LicenceNo">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="Customer_Details_pkey" type="pk-constr" table="public.&quot;Customer_Details&quot;">
+		<columns names="Cust_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Payment_t">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="380" y="60"/>
+	<column name="Payment_ID" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Cust_ID">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Payment_amount">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Payment_mode">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="Payment_date">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="Payment_t_pkey" type="pk-constr" table="public.&quot;Payment_t&quot;">
+		<columns names="Payment_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Rental_Information">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="720" y="60"/>
+	<column name="Rnt_ID" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Rnt_PickupDate">
+		<type name="date" length="0"/>
+	</column>
+	<column name="Rnt_ReturnDate">
+		<type name="date" length="0"/>
+	</column>
+	<column name="Rnt_FinalMeterReading">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Rnt_InitialMeterReading">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Rnt_ChargesPerMile">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Payment_ID">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Rental_Information_pkey" type="pk-constr" table="public.&quot;Rental_Information&quot;">
+		<columns names="Rnt_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Cars_t">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1060" y="60"/>
+	<column name="Car_ID" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Car_model">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="Car_make">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="Car_insuranceNo">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Car_NumberPlate">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="Car_Availability">
+		<type name="character" length="3"/>
+	</column>
+	<column name="Rnt_ID">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Cars_t_pkey" type="pk-constr" table="public.&quot;Cars_t&quot;">
+		<columns names="Car_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Branch_t">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1360" y="60"/>
+	<column name="Branch_ID" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Branch_Name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="Branch_Address">
+		<type name="character varying" length="200"/>
+	</column>
+	<column name="Car_ID">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Branch_t_pkey" type="pk-constr" table="public.&quot;Branch_t&quot;">
+		<columns names="Branch_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<view name="payment_v">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="60" y="260"/>
+	<reference>
+		<expression><![CDATA[ SELECT "Branch_t"."Branch_ID",
+    "Branch_t"."Branch_Name",
+    "Branch_t"."Branch_Address",
+    "Branch_t"."Car_ID"
+   FROM "Branch_t"
+  WHERE ("Branch_t"."Car_ID" >= 3002);]]></expression>
+	</reference>
+</view>
+
+<view name="car_v">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="280" y="260"/>
+	<reference>
+		<expression><![CDATA[ SELECT "Cars_t"."Car_ID",
+    "Cars_t"."Car_model",
+    "Cars_t"."Car_make",
+    "Cars_t"."Car_insuranceNo",
+    "Cars_t"."Car_NumberPlate",
+    "Cars_t"."Car_Availability",
+    "Cars_t"."Rnt_ID"
+   FROM "Cars_t"
+  WHERE ("Cars_t"."Car_Availability" = 'YES'::bpchar);]]></expression>
+	</reference>
+</view>
+
+<constraint name="FK_Payment_t.Cust_ID" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Customer_Details&quot;" table="public.&quot;Payment_t&quot;">
+	<columns names="Cust_ID" ref-type="src-columns"/>
+	<columns names="Cust_ID" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="Rental_Information_FK" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Payment_t&quot;" table="public.&quot;Rental_Information&quot;">
+	<columns names="Payment_ID" ref-type="src-columns"/>
+	<columns names="Payment_ID" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="Cars_tFK" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Rental_Information&quot;" table="public.&quot;Cars_t&quot;">
+	<columns names="Rnt_ID" ref-type="src-columns"/>
+	<columns names="Rnt_ID" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="Branch_tFK" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Cars_t&quot;" table="public.&quot;Branch_t&quot;">
+	<columns names="Car_ID" ref-type="src-columns"/>
+	<columns names="Car_ID" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_Payment_t_Customer_Details&quot;" type="relfk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Payment_t&quot;"
+	 dst-table="public.&quot;Customer_Details&quot;" reference-fk="FK_Payment_t.Cust_ID"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Rental_Information_Payment_t&quot;" type="relfk"
+	 custom-color="#5aa578"
+	 src-table="public.&quot;Rental_Information&quot;"
+	 dst-table="public.&quot;Payment_t&quot;" reference-fk="Rental_Information_FK"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Cars_t_Rental_Information&quot;" type="relfk"
+	 custom-color="#4b3e56"
+	 src-table="public.&quot;Cars_t&quot;"
+	 dst-table="public.&quot;Rental_Information&quot;" reference-fk="Cars_tFK"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Branch_t_Cars_t&quot;" type="relfk"
+	 custom-color="#9ac721"
+	 src-table="public.&quot;Branch_t&quot;"
+	 dst-table="public.&quot;Cars_t&quot;" reference-fk="Branch_tFK"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
